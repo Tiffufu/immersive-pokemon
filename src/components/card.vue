@@ -2,11 +2,11 @@
 <div class="card" style="width: 18rem;">
   <img src=""  alt="">
   <div class="card-body">
-    <img v-bind:src="pokemon.sprites['front_default']" v-bind:alt="pokemon.name">
+    <img :src="pokemon.sprites['front_default']" :alt="pokemon.name">
     <!-- <img class="card-img-top" v-bind:src="pokemon.sprites.front_default" v-bind:alt="pokemon.name"> -->
     <h5 class="text-capitalize card-title"> {{ pokemon.name }}</h5>
-    <p class="card-text mb-0" >Height: {{ pokemon.height }}</p>
-    <p class="card-text mt-0">Weight: {{ pokemon.weight }} </p>
+    <p class="card-text mb-0" >Height: {{ (pokemon.height * 3.937).toFixed(2) }} inches</p>
+    <p class="card-text mt-0">Weight: {{ (pokemon.weight / 4.536).toFixed(2) }} lbs</p>
   </div>
 </div>
 </template>
@@ -16,7 +16,7 @@ export default {
   name: 'card',
   data: function () {
     return {
-    pokemon: null
+    pokemon: ""
     }
   },
   props: {
@@ -32,8 +32,9 @@ export default {
     url: 'https://pokeapi.co/api/v2/pokemon/raichu',
     responseType: 'stream'
     })
+    
     .then(function (response) {
-      console.log(response.data);
+      // console.log(response.data);
       vm.pokemon = response.data
     });
   }
