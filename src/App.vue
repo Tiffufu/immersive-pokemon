@@ -1,14 +1,12 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <div class="container">
+      <div class="row">
     <!-- Looks through the card 82 times (for each rock type Pokemon -->
     <card :url="item.pokemon.url" v-for="item in pokemonOfRockType" :key="item.pokemon.name"></card> 
-
-    <!-- <div v-for="item in pokemonOfRockType" :key="item.pokemon.name">
-      {{ item.pokemon.name }}
-    </div> -->
-  </div>
+</div>
+</div>
+</div>
 </template>
 
 <script>
