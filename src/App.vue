@@ -4,7 +4,7 @@
       <h1 class="text-center display-2">Rock Type Pokemon</h1>
       <div class="row">
     <!-- Looks through the card 82 times (for each rock type Pokemon -->
-    <card v-if="!undefined" :url="item.pokemon.url" v-for="item in pokemonOfRockType" :key="item.pokemon.name"></card> 
+    <card :url="item.pokemon.url" v-for="item in pokemonOfRockType" :key="item.pokemon.name"></card> 
 </div>
 </div>
 </div>
