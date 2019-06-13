@@ -1,9 +1,10 @@
 <template>
   <div id="app">
     <div class="container">
+      <h1 class="text-center display-2">Rock Type Pokemon</h1>
       <div class="row">
     <!-- Looks through the card 82 times (for each rock type Pokemon -->
-    <card :url="item.pokemon.url" v-for="item in pokemonOfRockType" :key="item.pokemon.name"></card> 
+    <card v-if="!undefined" :url="item.pokemon.url" v-for="item in pokemonOfRockType" :key="item.pokemon.name"></card> 
 </div>
 </div>
 </div>
@@ -37,7 +38,7 @@ export default {
     })
     
     .then(function (response) {
-      // console.log(response.data.pokemon);
+      console.log(response.data.pokemon);
       // vm.pokemonOfRockType makes VueJS aware of this object.
       // Axios will later inject data into pokemonOfRockType object when it loads
       vm.pokemonOfRockType = response.data.pokemon
@@ -45,14 +46,3 @@ export default {
   }
 }
 </script>
-
-<style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
