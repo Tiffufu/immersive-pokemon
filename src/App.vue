@@ -1,10 +1,13 @@
 <template>
   <div id="app">
     <div class="container">
-      <h1 class="text-center display-2">Rock Type Pokemon</h1>
-      <div class="row">
+      <h1 class="text-capitalize text-center display-3">{{ activeType }} Type Pokemon</h1>
+      <button class="m-1 btn btn-info text-capitalize" :key="type" v-for="type in types" @click="changeType(type.name)">
+        {{ type.name }}
+      </button>
+      <div class="mt-3 row">
     <!-- Looks through the card 82 times (for each rock type Pokemon -->
-    <card :url="item.pokemon.url" v-for="item in pokemonOfRockType" :key="item.pokemon.name"></card> 
+    <card :url="item.pokemon.url" v-for="item in pokemonOfCurrentType" :key="item.pokemon.name"></card> 
 </div>
 </div>
 </div>
@@ -23,9 +26,29 @@ export default {
     data: function () {
       return {
       //Creates meaningful object for VueJs to link to
-      pokemonOfRockType: ""
+      pokemonOfCurrentType: "",
+      types: "",
+      activeType: "normal"
       }
     },
+  methods: {
+    changeType: function(name) {
+      this.activeType = name;
+      this.retrievePokemonOfSpecifiedType(name);
+    },
+    retrievePokemonOfSpecifiedType: function(type) {
+      const axios = require('axios');
+      const vm = this;
+      axios({
+          method: 'get',
+          url: 'https://pokeapi.co/api/v2/type/' + type
+      })
+      .then(function (response) {
+          // console.log(response.data.pokemon);
+          vm.pokemonOfCurrentType = response.data.pokemon
+      });
+    }
+  },
     mounted: function() {
 
     const axios = require('axios');
@@ -33,15 +56,25 @@ export default {
 
     axios({
     method: 'get',
-    url: 'https://pokeapi.co/api/v2/type/rock',
-    responseType: 'stream'
+    url: 'https://pokeapi.co/api/v2/type/' + this.activeType
+    })
+    .then(function (response) {
+      console.log(response.data.pokemon);
+      // vm.pokemonOfCurrentType makes VueJS aware of this object.
+      // Axios will later inject data into pokemonOfCurrentType object when it loads
+      vm.pokemonOfCurrentType = response.data.pokemon
+    });
+
+     axios({
+    method: 'get',
+    url: 'https://pokeapi.co/api/v2/type',
     })
     
     .then(function (response) {
-      console.log(response.data.pokemon);
-      // vm.pokemonOfRockType makes VueJS aware of this object.
-      // Axios will later inject data into pokemonOfRockType object when it loads
-      vm.pokemonOfRockType = response.data.pokemon
+      console.log(response.data.results);
+      // vm.pokemonOfCurrentType makes VueJS aware of this object.
+      // Axios will later inject data into pokemonOfCurrentType object when it loads
+      vm.types = response.data.results
     });
   }
 }
